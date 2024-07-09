@@ -79,3 +79,5 @@ def mostUsedEmojis(selected_user, df):
     return_df = return_df.rename(columns={'0': 'emoji', '1': 'count'})
     return return_df
 
+
+

@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import preprocessor
 import helper
+import Sentiment
 import matplotlib.pyplot as pt
 
 st.sidebar.title("Whatsapp Chat Analyser")
@@ -59,22 +60,22 @@ if uploaded_file is not None:
         # World Cloud
 
         st.header("Word Cloud")
-        df_wc = helper.createWordCloud(selected_user,df)
-        fig, ax=plt.subplots()
+        df_wc = helper.createWordCloud(selected_user, df)
+        fig, ax = plt.subplots()
         ax.imshow(df_wc)
         st.pyplot(fig)
 
         # most common words
         st.header("Most used words")
-        mostCommonDf=helper.mostCommonWords(selected_user,df)
-        fig, ax=plt.subplots()
+        mostCommonDf = helper.mostCommonWords(selected_user, df)
+        fig, ax = plt.subplots()
         ax.bar(mostCommonDf[0], mostCommonDf[1])
         plt.xticks(rotation='vertical')
         st.pyplot(fig)
 
         # most common emojis
         st.header("Common Emojis Used")
-        mostCommonEmojis=helper.mostUsedEmojis(selected_user,df)
+        mostCommonEmojis = helper.mostUsedEmojis(selected_user, df)
         col1, col2 = st.columns(2)
         with col1:
             st.dataframe(mostCommonEmojis)
@@ -82,3 +83,8 @@ if uploaded_file is not None:
             fig, ax = plt.subplots()
             ax.pie(mostCommonEmojis.head()[1], labels=mostCommonEmojis.head()[0])
             st.pyplot(fig)
+
+        if selected_user != 'Overall':
+            st.header('Sentiment Analysis : ' + selected_user)
+            sdf = Sentiment.Sentiment(df, selected_user)
+            st.dataframe(sdf)
