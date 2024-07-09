@@ -9,7 +9,7 @@ model = pk.load(open('model.pkl', 'rb'))
 def Sentiment(df, selected_user):
     if selected_user != "Overall":
         df = df[df['users'] == selected_user]
-    df['emotion']=df['messages'].apply(predict)
+    df['emotion'] = df['messages'].apply(predict)
     df.drop(['year', 'month', 'day', 'minute', 'users', 'hour'], axis=1, inplace=True)
     return df
 
